@@ -1,0 +1,57 @@
+table,
+tr {
+  margin-right: 30px;
+}
+
+body {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+h1,
+p {
+  margin: 10px auto;
+}
+
+.hide-table {
+  display: none;
+}
+
+.show-table {
+  display: block;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.green {
+  color: seagreen;
+  font-weight: bold;
+}
+
+.gray {
+  background-color: #f3f3f3;
+}
+
+.negrito {
+  font-weight: bold;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.container-table {
+  width: 100%;
+  padding: 24px;
+  margin-left: auto;
+  margin-right: auto;
+}

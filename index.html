@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./script/script.js"></script>
+    <title>Cálculo salário líquido</title>
+  </head>
+
+  <body>
+    <div class="container-table container">
+      <h1>Cálculo de salário líquido</h1>
+      <p>
+        Cálculo de salário líquido a partir do slário bruto deduzindo INSS e IR
+        e demais descontos acordados com o empregador.
+      </p>
+      <div class="content row">
+        <div class="col col-sm-4">
+          <div class="input-group mb-3 width">
+            <div class="input-group-prepend">
+              <span class="input-group-text">R$</span>
+            </div>
+            <input
+              id="salario-bruto"
+              type="number"
+              min="1"
+              step="any"
+              placeholder="Salário bruto"
+              class="form-control"
+            />
+          </div>
+          <div class="input-group mb-3 width">
+            <input
+              id="numero-dependente"
+              placeholder="Número de dependentes"
+              type="number"
+              class="form-control"
+            />
+            <div class="input-group-append"></div>
+          </div>
+          <div class="input-group mb-3 width">
+            <div class="input-group-prepend">
+              <span class="input-group-text">R$</span>
+            </div>
+            <input
+              id="outros-descontos"
+              type="number"
+              placeholder="Outros desconstos"
+              class="form-control"
+            />
+
+            <!-- <svg id="adicionar-desconto" width="2.2em" height="2.2em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill ml-3 cursor" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                    </svg>
+                    TO DO : Implementar botão de adicionar input para outros descontos -->
+          </div>
+          <button
+            id="calcular"
+            type="button"
+            class="btn btn-outline-dark btn-lg btn-block mb-3"
+          >
+            Calcular
+          </button>
+        </div>
+
+        <div id="tabela" class="col col-sm-8">
+          <table id="table" class="table hide-table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Descrição</th>
+                <th scope="col">Alíquota</th>
+                <th scope="col">Proventos</th>
+                <th scope="col">Descontos</th>
+              </tr>
+            </thead>
+            <tbody id="body-table">
+              <!-- <tr id="descricao">
+                            
+                        </tr>
+                        <tr id="aliquota">
+                           
+                        </tr>
+                        <tr id="proventos">
+                           
+                        </tr>
+                        <tr id="descontos">
+                            
+                        </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
