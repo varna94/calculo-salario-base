@@ -12,7 +12,7 @@ function calcularDescontos(event) {
   var salarioBruto = document.querySelector("#salario-bruto").value;
   var qtdDependentes = document.querySelector("#numero-dependente").value;
   var desc = document.querySelector("#outros-descontos").value;
-  if (desc == "") {
+  if (desc === "") {
     desc = 0;
   }
   if (!isNew) {
