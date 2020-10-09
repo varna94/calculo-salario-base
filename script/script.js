@@ -32,7 +32,7 @@ function calcularDescontos(event) {
 
   var salarioDescInss = descontoInss(salarioBruto, desc);
   var salarioDescIr = descontoIr(salarioDescInss.salario, qtdDependentes);
-  // console.log('descontos - ' + salarioDescInss.salario);
+  console.log("descontos - " + JSON.stringify(salarioDescInss));
   var SalarioFinal =
     salarioBruto -
     (parseFloat(salarioDescInss.valorDescontado) +
@@ -40,7 +40,7 @@ function calcularDescontos(event) {
   render(
     parseFloat(salarioBruto),
     salarioDescInss,
-    desc,
+    parseFloat(desc),
     salarioDescIr,
     SalarioFinal
   );
@@ -165,7 +165,7 @@ function render(salarioBruto, salarioInss, desc, salarioIR, SalarioFinal) {
       <td class="negrito">${salarioInss.descricao}</td>
       <td>${salarioInss.desconto}</td>
       <td></td>
-      <td class="red">${salarioInss.proventos.toLocaleString("pt-br", {
+      <td class="red">${salarioInss.valorDescontado.toLocaleString("pt-br", {
         style: "currency",
         currency: "BRL"
       })}</td>
@@ -210,7 +210,6 @@ function render(salarioBruto, salarioInss, desc, salarioIR, SalarioFinal) {
       })}</td>
     </tr>
     </tbody>`;
-  console.log(infoTable);
+
   tableBody.innerHTML = infoTable;
-  //tableBody.textContent = infoTable;
 }
