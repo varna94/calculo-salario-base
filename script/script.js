@@ -37,11 +37,14 @@ function calcularDescontos(event) {
     salarioBruto -
     (parseFloat(salarioDescInss.valorDescontado) +
       parseFloat(salarioDescIr.valorDescontado));
-  renderSalarioBruto(parseFloat(salarioBruto));
-  renderINSS(salarioDescInss);
-  renderIR(salarioDescIr);
-  renderOutrosDescontos(parseFloat(desc));
-  renderTotal(parseFloat(salarioBruto), SalarioFinal.toFixed(2), desc);
+  render(
+    parseFloat(salarioBruto),
+    salarioDescInss,
+    desc,
+    salarioDescIr,
+    SalarioFinal
+  );
+
   isNew = false;
 }
 //cáculo de desconto de INSS e outros descontos informados
@@ -139,184 +142,75 @@ function descontoIr(salarioIR, dependentes) {
     };
   }
 }
-//renderiza Salário Bruto
-function renderSalarioBruto(salarioBruto) {
+
+function render(salarioBruto, salarioInss, desc, salarioIR, SalarioFinal) {
+  console.log("render");
   var table = document.querySelector("#table");
   table.classList.remove("hide-table");
-
-  var bodyTableS = document.querySelector("#body-table");
-
-  var trRetornoS = document.createElement("tr");
-  trRetornoS.id = "rowSalarioBruto";
-
-  var tdDescricaoS = document.createElement("td");
-  var tdAliquotaS = document.createElement("td");
-  var tdProventosS = document.createElement("td");
-  var tdDescontosS = document.createElement("td");
-  tdDescricaoS.classList.add("negrito");
-  tdProventosS.classList.add("green");
-
-  tdDescricaoS.textContent = "Salário Bruto";
-  tdAliquotaS.textContent = "";
-  tdProventosS.textContent = salarioBruto.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL"
-  });
-  tdDescontosS.textContent = "";
-
-  bodyTableS.appendChild(trRetornoS);
-  trRetornoS.appendChild(tdDescricaoS);
-  trRetornoS.appendChild(tdAliquotaS);
-  trRetornoS.appendChild(tdProventosS);
-  trRetornoS.appendChild(tdDescontosS);
-}
-//renderiza descontos INSS
-function renderINSS(salarioInss) {
-  var bodyTable = document.querySelector("#body-table");
-
-  var trRetorno = document.createElement("tr");
-  trRetorno.id = "rowSalarioINSS";
-  var tdDescricao = document.createElement("td");
-  var tdAliquota = document.createElement("td");
-  var tdProventos = document.createElement("td");
-  var tdDescontos = document.createElement("td");
-  tdDescricao.classList.add("negrito");
-  tdDescontos.classList.add("red");
-
-  tdDescricao.textContent = salarioInss.descricao;
-  tdAliquota.textContent = salarioInss.desconto;
-  tdProventos.textContent = salarioInss.proventos.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL"
-  });
-  tdDescontos.textContent = salarioInss.valorDescontado.toLocaleString(
-    "pt-br",
-    { style: "currency", currency: "BRL" }
-  );
-
-  bodyTable.appendChild(trRetorno);
-  trRetorno.appendChild(tdDescricao);
-  trRetorno.appendChild(tdAliquota);
-  trRetorno.appendChild(tdProventos);
-  trRetorno.appendChild(tdDescontos);
-}
-//renderiza outros descontos
-function renderOutrosDescontos(desc) {
-  var bodyTable = document.querySelector("#body-table");
-
-  var trOutrosDescontos = document.createElement("tr");
-  trOutrosDescontos.id = "rowOutrosDescontos";
-  var tdOutrosDescontosDescricao = document.createElement("td");
-  var tdAliquotaOutrosDescontos = document.createElement("td");
-  var tdProventosOutrosDescontos = document.createElement("td");
-  var tdDescontosOutrosDescontos = document.createElement("td");
-  tdOutrosDescontosDescricao.classList.add("negrito");
-  tdDescontosOutrosDescontos.classList.add("red");
-
-  tdOutrosDescontosDescricao.textContent = "Outros descontos";
-  tdAliquotaOutrosDescontos.textContent = "";
-  tdProventosOutrosDescontos.textContent = "";
-  tdDescontosOutrosDescontos.textContent = desc.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL"
-  });
-
-  bodyTable.appendChild(trOutrosDescontos);
-  trOutrosDescontos.appendChild(tdOutrosDescontosDescricao);
-  trOutrosDescontos.appendChild(tdAliquotaOutrosDescontos);
-  trOutrosDescontos.appendChild(tdProventosOutrosDescontos);
-  trOutrosDescontos.appendChild(tdDescontosOutrosDescontos);
-}
-//renderiza descontos IRRF
-function renderIR(salarioIR) {
-  var bodyTable = document.querySelector("#body-table");
-
-  var trRetornoIR = document.createElement("tr");
-  trRetornoIR.id = "rowSalarioIR";
-  var tdDescricaoIR = document.createElement("td");
-  var tdAliquotaIR = document.createElement("td");
-  var tdProventosIR = document.createElement("td");
-  var tdDescontosIR = document.createElement("td");
-  tdDescricaoIR.classList.add("negrito");
-  tdDescontosIR.classList.add("red");
-
-  tdDescricaoIR.textContent = salarioIR.descricao;
-  tdAliquotaIR.textContent = salarioIR.desconto;
-  tdProventosIR.textContent = salarioIR.proventos.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL"
-  });
-  tdDescontosIR.textContent = salarioIR.valorDescontado.toLocaleString(
-    "pt-br",
-    { style: "currency", currency: "BRL" }
-  );
-
-  bodyTable.appendChild(trRetornoIR);
-  trRetornoIR.appendChild(tdDescricaoIR);
-  trRetornoIR.appendChild(tdAliquotaIR);
-  trRetornoIR.appendChild(tdProventosIR);
-  trRetornoIR.appendChild(tdDescontosIR);
-}
-//renderiza soma dos descontos e salairo final
-function renderTotal(salarioBruto, SalarioFinal, desc) {
-  var saldoFinal = parseFloat(salarioBruto) - parseFloat(SalarioFinal);
-  console.log("saldo final - " + saldoFinal);
+  let saldoFinal = parseFloat(salarioBruto) - parseFloat(SalarioFinal);
   saldoFinal = saldoFinal + parseFloat(desc);
-  var bodyTable = document.querySelector("#body-table");
-  SalarioFinal = salarioBruto - saldoFinal;
+  var tableBody = document.querySelector("#body-table");
 
-  console.log("saldo final - " + saldoFinal);
-  var trRetornoTotal = document.createElement("tr");
-  trRetornoTotal.id = "rowSalarioTotal";
-  trRetornoTotal.classList.add("gray");
-  var tdDescricaoTotal = document.createElement("td");
-  var tdAliquotaTotal = document.createElement("td");
-  var tdProventosTotal = document.createElement("td");
-  var tdDescontosTotal = document.createElement("td");
-  tdDescricaoTotal.classList.add("negrito");
-  tdDescontosTotal.classList.add("red");
-  tdProventosTotal.classList.add("green");
-
-  tdDescricaoTotal.textContent = "Total";
-  tdAliquotaTotal.textContent = "";
-  tdProventosTotal.textContent = salarioBruto.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL"
-  });
-  tdDescontosTotal.textContent = saldoFinal.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL"
-  });
-
-  bodyTable.appendChild(trRetornoTotal);
-  trRetornoTotal.appendChild(tdDescricaoTotal);
-  trRetornoTotal.appendChild(tdAliquotaTotal);
-  trRetornoTotal.appendChild(tdProventosTotal);
-  trRetornoTotal.appendChild(tdDescontosTotal);
-
-  //resultado final
-
-  var trRetornoResul = document.createElement("tr");
-  trRetornoResul.id = "rowSalarioResul";
-  trRetornoResul.classList.add("gray");
-  var tdDescricaoResul = document.createElement("td");
-  var tdAliquotaResul = document.createElement("td");
-  var tdProventosResul = document.createElement("td");
-  var tdDescontosResul = document.createElement("td");
-  tdDescricaoResul.classList.add("negrito");
-  tdDescontosResul.classList.add("green");
-
-  tdDescricaoResul.textContent = "Resultado";
-  tdAliquotaResul.textContent = "";
-  tdProventosResul.textContent = "";
-  tdDescontosResul.textContent = SalarioFinal.toLocaleString("pt-br", {
-    style: "currency",
-    currency: "BRL"
-  });
-
-  bodyTable.appendChild(trRetornoResul);
-  trRetornoResul.appendChild(tdDescricaoResul);
-  trRetornoResul.appendChild(tdAliquotaResul);
-  trRetornoResul.appendChild(tdProventosResul);
-  trRetornoResul.appendChild(tdDescontosResul);
+  const infoTable = ` <tbody id="body-table">
+    <tr id="rowSalarioBruto">
+      <td class="negrito">Salário Bruto</td>
+      <td></td>
+      <td class="green">${salarioBruto.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })}</td>
+      <td></td>
+    </tr>
+    <tr id="rowSalarioINSS">
+      <td class="negrito">${salarioInss.descricao}</td>
+      <td>${salarioInss.desconto}</td>
+      <td></td>
+      <td class="red">${salarioInss.proventos.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })}</td>
+    </tr>
+    <tr id="rowSalarioIR">
+      <td class="negrito">${salarioIR.descricao}</td>
+      <td>${salarioIR.desconto}</td>
+      <td></td>
+      <td class="red">${salarioIR.valorDescontado.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })}</td>
+      </tr>
+    <tr id="rowOutrosDescontos">
+      <td class="negrito">Outros descontos</td>
+      <td></td>
+      <td></td>
+      <td class="red">${desc.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })}</td>
+    </tr>
+    <tr id="rowSalarioTotal" class="gray">
+      <td class="negrito">Total</td>
+      <td></td>
+      <td class="green">${salarioBruto.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })}</td>
+      <td class="red">${saldoFinal.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })}</td>
+    </tr>
+    <tr id="rowSalarioResul" class="gray">
+      <td class="negrito">Resultado</td>
+      <td></td>
+      <td></td>
+      <td class="green">${SalarioFinal.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })}</td>
+    </tr>
+    </tbody>`;
+  console.log(infoTable);
+  tableBody.innerHTML = infoTable;
+  //tableBody.textContent = infoTable;
 }
